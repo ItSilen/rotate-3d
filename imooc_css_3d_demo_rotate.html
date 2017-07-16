@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<title>Rotate</title>
+	<style>
+		#stage-3d{
+			-webkit-perspective: 800px;
+			-moz-perspective: 800px;
+			-ms-perspective: 800px;
+			perspective: 800px;
+			-webkit-perspective-origin: 50% 50%;
+			-moz-perspective-origin: 50% 50%;
+			-ms-perspective-origin: 50% 50%;
+			perspective-origin: 50% 50%;
+			-webkit-transform-style: -webkit-preserve-3d;
+			-moz-transform-style: -moz-preserve-3d;
+			-ms-transform-style: -ms-preserve-3d;
+			transform-style: preserve-3d;
+		}
+
+		#block{
+			width: 200px;
+			height: 200px;
+			background-color: blue;
+			margin: 100px auto;
+		}
+
+		#op{
+			width: 80%;
+			margin: 0 auto;
+		}
+
+		p{
+			text-align: left;
+		}
+
+		p input{
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div id="stage-3d">
+		<div id="block">
+		</div>
+	</div>
+
+<div id="op">
+	<p>rotateX：<span id="x-value-text">0</span>deg</p>
+	<p><input type="range" min=-360 max=360 value=0 onchange="" id="x-input"></p>
+	<p>rotateY:<span id="y-value-text">0</span>deg</p>
+	<p><input type="range" min=-360 max=360 value=0 onchange="" id="y-input"></p>
+	<p>rotateZ:<span id="z-value-text">0</span>deg</p>
+	<p><input type="range" min=-360 max=360 value=0 onchange="" id="z-input"></p>
+</div>
+
+<script>
+	window.onload = function() {
+		function getId(id) {
+			return document.getElementById(id);
+		}
+
+		var block = getId("block");
+		var inputBox = getId("op");
+
+		
+		var x = 0, y = 0, z = 0;
+		
+		/*	@param  {direct：旋转方向, 
+		 * 			spanId:显示旋转角度的span的id}
+		 */
+		function rotate(spanId, value) {
+			// 改变文本显示的旋转值
+			getId(spanId).innerText = value;
+			// 改变3d物体的旋转样式
+
+			block.style.WebkitTransform = "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)";
+			block.style.MozTransform = "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)";
+			block.style.msTransform = "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)";
+			block.style.transfrom = "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)";
+		}
+
+		// input事件代理
+		// 监听oninput事件，调用rotate函数对3d物体进行旋转
+		inputBox.oninput = function(e) {
+			var target = e.target;
+			var targetId = target.id;
+			
+			switch(targetId) {
+				case "x-input":
+					x = getId(targetId).value;
+					rotate("x-value-text",x);
+					break;
+				case "y-input":
+					y = getId(targetId).value;
+					rotate("y-value-text",y);
+					break;
+				case "z-input":
+					z = getId(targetId).value;
+					rotate("z-value-text",z);
+					break;
+
+
+				default:
+					break;
+			}
+		}
+	}
+</script>
+</body>
+</html>

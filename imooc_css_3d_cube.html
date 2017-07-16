@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<title>Rotate Cube</title>
+	<style>
+		html, body, div, span,
+        h1, h2, h3, h4, h5, h6, p
+        a, img, ol, ul, li{
+            margin:0;padding:0;border:0;outline:0;
+        }
+
+        #stage{
+        	-webkit-perspective: 800;
+            -webkit-perspective-origin: 50% 50%;
+        }
+
+        #cube{
+        	position: relative;
+            margin:100px auto;
+            height:200px;
+            width:200px;
+            -webkit-transform-style:preserve-3d;
+            transform-origin: 50% 50% -100px;
+            -webkit-transform: rotateX(56deg) rotateY(54deg);
+            -ms-transform: rotateX(56deg) rotateY(54deg);
+            -o-transform: rotateX(56deg) rotateY(54deg);
+            transform: rotateX(56deg) rotateY(54deg);
+        }
+
+        .face{
+            position:absolute;
+            height:160px;
+            width:160px;
+            padding:20px;
+            background-color: black;
+            /*border: 1px solid red;*/
+
+            color:white;
+            font-weight:bold;
+            font-size:160px;
+            line-height:160px;
+            text-align:center;
+
+            /*-webkit-transition: -webkit-transform 1s linear;*/
+        }
+
+        #face1  {
+            background-color: rgba( 0,0,255, 0.8);
+        }
+
+        #face2{
+        	-webkit-transform-origin:right;
+            -webkit-transform: rotateY(-90deg);
+            background-color: rgba( 0,128,0, 0.8);
+        }
+
+        #face3{
+        	-webkit-transform-origin:left;
+        	-webkit-transform: rotateY(90deg);
+            background-color: rgba( 255,0,0, 0.8);
+        }
+
+        #face4{
+        	-webkit-transform-origin:bottom;
+        	-webkit-transform: rotateX(90deg);
+            background-color: rgba(255,255,0, 0.8);
+        }
+
+        #face5{
+        	-webkit-transform-origin:top;
+        	-webkit-transform: rotateX(-90deg);
+            background-color: rgba( 128,0,128, 0.8);
+        }
+
+        #face6 {
+            -webkit-transform: translateZ(-200px);
+            background-color: rgba( 165,42,42, 0.8);
+        }
+
+
+        #op{
+        	margin:0 auto;
+            font-size:16px;
+            font-weight:bold;
+            width:80%;
+        }
+
+        #op input{width:100%;}
+
+	</style>
+</head>
+<body>
+	<div id="stage">
+		<div id="cube">
+			<div class="face" id="face1">1</div>
+	        <div class="face" id="face2">2</div>
+	        <div class="face" id="face3">3</div>
+	        <div class="face" id="face4">4</div>
+	        <div class="face" id="face5">5</div>
+	        <div class="face" id="face6">6</div>
+		</div>
+	</div>
+
+
+	<div id="op">
+		<p>rotateX：<span id="x-value-text">56</span>deg</p>
+		<p><input type="range" min=-360 max=360 value=56 onchange="" id="x-input"></p>
+		<p>rotateY:<span id="y-value-text">54</span>deg</p>
+		<p><input type="range" min=-360 max=360 value=54 onchange="" id="y-input"></p>
+		<p>rotateZ:<span id="z-value-text">0</span>deg</p>
+		<p><input type="range" min=-360 max=360 value=0 onchange="" id="z-input"></p>
+	</div>
+
+	<script>
+		window.onload = function() {
+			function getId(id) {
+				return document.getElementById(id);
+			}
+
+
+			var cube = getId("cube");
+			var op = getId("op");
+			var x = 56, y = 54, z = 0;
+
+			function rotate(spanId, value) {
+				getId(spanId).innerText = value;
+
+				cube.style.WebkitTransform = "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)";
+				cube.style.MozTransform = "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)";
+				cube.style.msTransform = "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)";
+				cube.style.transfrom = "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)";
+			}
+
+
+			op.oninput = function(e) {
+				var targetId = e.target.id;
+				switch(targetId) {
+					case "x-input":
+						x = getId(targetId).value;
+						rotate("x-value-text", x);
+						break;
+					case "y-input":
+						y = getId(targetId).value;
+						rotate("y-value-text", y);
+						break;
+
+					case "z-input":
+						z = getId(targetId).value;
+						rotate("z-value-text", z);
+						break;
+					default:
+						break;
+				}
+
+			}
+
+
+
+
+
+		}
+
+
+	</script>
+</body>
+</html>
